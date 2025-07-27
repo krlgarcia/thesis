@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <SafeAreaView style={styles.container}>
       <Stack.Screen options={{ title: "Overview", headerShown: false }} />
-      <Text style={styles.title}>Scanner Test</Text>
+      <Text style={styles.title}>Inaul Textile Scanner</Text>
       <View style={{ gap: 20 }}>
         <Pressable onPress={requestPermission}>
           <Text style={styles.buttonStyle}>Request Permissions</Text>
