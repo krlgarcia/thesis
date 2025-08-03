@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { CameraView } from "expo-camera";
 import { Stack } from "expo-router";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AppState,
   Linking,
@@ -16,6 +16,7 @@ import {
 export default function Home() {
   const qrLock = useRef(false);
   const appState = useRef(AppState.currentState);
+  const [torchOn, setTorchOn] = useState(false);
 
   useEffect(() => {
     const subscription = AppState.addEventListener("change", (nextAppState) => {
@@ -40,6 +41,7 @@ export default function Home() {
       <CameraView
         style={StyleSheet.absoluteFillObject}
         facing="back"
+        enableTorch={torchOn}
         onBarcodeScanned={({ data }) => {
           if (data && !qrLock.current) {
             qrLock.current = true;
@@ -57,8 +59,12 @@ export default function Home() {
 
         <TouchableOpacity style={styles.captureButton} />
 
-        <TouchableOpacity>
-          <Ionicons name="flashlight-outline" size={30} color="white" />
+        <TouchableOpacity onPress={() => setTorchOn(!torchOn)}>
+          <Ionicons
+            name={torchOn ? "flashlight" : "flashlight-outline"}
+            size={30}
+            color="white"
+          />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
